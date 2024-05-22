@@ -30,6 +30,7 @@ button {
   margin: 5px 0;
 }
 
-#weather-result {
+#weather-result,
+#history-result {
   margin-top: 20px;
 }
