@@ -3,32 +3,52 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='register.css') }}"
+    />
     <title>Register</title>
   </head>
   <body>
-    <h1>Register</h1>
-    <form method="post">
-      {{ form.hidden_tag() }}
+    <div class="container">
+      <h1>Register</h1>
+      <form method="post">
+        {{ form.hidden_tag() }}
+        <p>
+          {{ form.username.label }}<br />
+          {{ form.username(size=32, class_='form-input') }}
+        </p>
+        <p>
+          {{ form.email.label }}<br />
+          {{ form.email(size=32, class_='form-input') }}
+        </p>
+        <p>
+          {{ form.password.label }}<br />
+          {{ form.password(size=32, class_='form-input') }}
+        </p>
+        <p>
+          {{ form.confirm_password.label }}<br />
+          {{ form.confirm_password(size=32, class_='form-input') }}
+        </p>
+        <p>{{ form.submit(class_='btn') }}</p>
+      </form>
+      <a href="{{ url_for('auth.login') }}" class="login-link">
+        Already have an account? Log in here.
+      </a>
+    </div>
+    <div class="footer">
       <p>
-        {{ form.username.label }}<br />
-        {{ form.username(size=32) }}
+        Photo by
+        <a
+          href="https://unsplash.com/@nathananderson?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+          >Nathan Anderson</a
+        >
+        on
+        <a
+          href="https://unsplash.com/photos/mountains-with-trees-under-white-star-at-night-L95xDkSSuWw?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+          >Unsplash</a
+        >
       </p>
-      <p>
-        {{ form.email.label }}<br />
-        {{ form.email(size=32) }}
-      </p>
-      <p>
-        {{ form.password.label }}<br />
-        {{ form.password(size=32) }}
-      </p>
-      <p>
-        {{ form.confirm_password.label }}<br />
-        {{ form.confirm_password(size=32) }}
-      </p>
-      <p>{{ form.submit() }}</p>
-    </form>
-    <a href="{{ url_for('auth.login') }}"
-      >Already have an account? Log in here.</a
-    >
+    </div>
   </body>
 </html>

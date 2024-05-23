@@ -4,23 +4,48 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='login.css') }}"
+    />
   </head>
   <body>
-    <h1>Login</h1>
-    <form method="post">
-      {{ form.hidden_tag() }}
-      <p>
-        {{ form.username.label }}<br />
-        {{ form.username(size=32) }}
-      </p>
-      <p>
-        {{ form.password.label }}<br />
-        {{ form.password(size=32) }}
-      </p>
-      <p>{{ form.submit() }}</p>
-    </form>
-    <a href="{{ url_for('auth.register') }}"
-      >Don't have an account? Register here.</a
-    >
+    <div class="sidebar">
+      <div class="weather-app">
+        <h1>Weather App</h1>
+      </div>
+      <div class="footer">
+        <p>
+          Photo by
+          <a
+            href="https://unsplash.com/@danramirez1998?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+            >Daniel Ramírez</a
+          >
+          on
+          <a
+            href="https://unsplash.com/photos/moon-view-from-clouds-q4TfWtnz_xw?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+            >Unsplash</a
+          >
+        </p>
+      </div>
+    </div>
+    <div class="content">
+      <h1>Login</h1>
+      <form method="post">
+        {{ form.hidden_tag() }}
+        <p>
+          {{ form.username.label }}<br />
+          {{ form.username(size=32) }}
+        </p>
+        <p>
+          {{ form.password.label }}<br />
+          {{ form.password(size=32) }}
+        </p>
+        <p>{{ form.submit() }}</p>
+      </form>
+      <a href="{{ url_for('auth.register') }}"
+        >Don't have an account? Register here.</a
+      >
+    </div>
   </body>
 </html>

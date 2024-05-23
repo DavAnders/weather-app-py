@@ -1,0 +1,73 @@
+body {
+  font-family: "Arial", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: url("night.jpg");
+  background-size: cover;
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 100%;
+  max-width: 320px;
+}
+
+form p {
+  margin-bottom: 20px;
+}
+
+.form-input,
+.btn {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.btn {
+  background-color: slateblue;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: darkslateblue;
+}
+
+a.login-link {
+  color: slateblue;
+  text-decoration: none;
+  display: block;
+  margin-top: 20px;
+}
+
+a.login-link:hover {
+  text-decoration: underline;
+}
+
+p {
+  text-align: start;
+}
+
+.footer {
+  color: whitesmoke;
+}
+
+.footer a {
+  color: whitesmoke;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
