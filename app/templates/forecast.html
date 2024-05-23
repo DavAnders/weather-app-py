@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Forecast</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='forecast.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Weather Forecast</h1>
+      <form id="forecast-form">
+        <input type="text" id="city" placeholder="Enter city" required />
+        <button type="submit">Get Forecast</button>
+      </form>
+      <div id="forecast-result-name"></div>
+      <div id="forecast-result" class="grid-container"></div>
+      <div class="back-link">
+        <a href="{{ url_for('main.index') }}">Back to Weather App</a>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("forecast-form");
+        form.addEventListener("submit", async function (e) {
+          e.preventDefault();
+          const city = document.getElementById("city").value;
+          const csrfToken = "{{ csrf_token() }}";
+
+          try {
+            const response = await fetch("/api/forecast", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrfToken,
+              },
+              body: JSON.stringify({ city, days: 5 }),
+            });
+            const forecast = await response.json();
+            console.log(forecast);
+
+            if (response.ok) {
+              let resultHtml = forecast.forecast
+                .map(
+                  (day) => `
+          <div class="grid-item">
+            <h3>${day.date}</h3>
+            <p>Temperature: ${day.avgtemp_f} °F</p>
+            <p>Condition: ${day.condition}</p>
+            <img src="${day.icon}" alt="Weather icon">
+          </div>
+        `
+                )
+                .join("");
+
+              document.getElementById("forecast-result").innerHTML = resultHtml;
+              document.getElementById(
+                "forecast-result-name"
+              ).innerHTML = `<h2>Forecast for ${forecast.city}, ${forecast.region}</h2>`;
+            } else {
+              document.getElementById(
+                "forecast-result"
+              ).innerHTML = `<p>${forecast.error}</p>`;
+            }
+          } catch (error) {
+            console.error("Error:", error);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

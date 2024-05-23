@@ -12,6 +12,11 @@ main = Blueprint('main', __name__)
 def index():
     return render_template('index.html')
 
+@main.route('/forecast')
+@login_required
+def forecast():
+    return render_template('forecast.html')
+
 @main.route('/api/weather', methods=['POST'])
 @login_required
 def get_weather():
@@ -33,7 +38,8 @@ def get_weather():
             'country': data['location']['country'],
             'temperature': data['current']['temp_f'], # in fahrenheit
             'description': data['current']['condition']['text'],
-            'date': date.today()
+            'date': date.today(),
+            'icon': 'https:' + data['current']['condition']['icon'] # Icon URL + HTTPS
         }
 
         user_weather = UserWeather(
@@ -68,5 +74,45 @@ def get_weather_history():
             for item in history
         ]
         return jsonify(history_data)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@main.route('/api/forecast', methods=['POST'])
+@login_required
+def get_forecast():
+    data = request.get_json()
+    city = data.get('city')
+    days = data.get('days', 5)  # Default to 5 days
+
+    if not city:
+        return jsonify({'error': 'City is required'}), 400
+
+    api_key = os.getenv('API_KEY')
+    url = f'http://api.weatherapi.com/v1/forecast.json?key={api_key}&q={city}&days={days}'
+
+    try:
+        response = requests.get(url)
+        forecast_data = response.json()
+
+        if response.status_code != 200:
+            return jsonify({'error': forecast_data.get('error', {}).get('message', 'Failed to fetch forecast data')}), response.status_code
+
+        forecast_list = []
+        for day in forecast_data['forecast']['forecastday']:
+            day_forecast = {
+                'date': day['date'],
+                'avgtemp_f': day['day']['avgtemp_f'],
+                'condition': day['day']['condition']['text'],
+                'icon': "https:" + day['day']['condition']['icon'] # Icon URL + HTTPS
+            }
+            forecast_list.append(day_forecast)
+
+        # Add city and region to the response
+        return jsonify({
+            'city': forecast_data['location']['name'],
+            'region': forecast_data['location']['region'],
+            'forecast': forecast_list
+        })
     except Exception as e:
         return jsonify({'error': str(e)}), 500

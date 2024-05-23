@@ -23,6 +23,9 @@
         <button type="submit">Get Weather</button>
       </form>
       <div id="weather-result"></div>
+      <div class="forecast-link">
+        <a href="{{ url_for('main.forecast') }}">5-Day Forecast</a>
+      </div>
     </div>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -50,6 +53,7 @@
                                 <h4>${data.country}</h4>
                                 <p>Temperature: ${data.temperature} °F</p>
                                 <p>Weather: ${data.description}</p>
+                                <img src="${data.icon}" alt="Weather icon">
                             `;
               } else {
                 document.getElementById(
