@@ -1,6 +1,6 @@
 ### Weather App Overview
 
-The goal of this project is to gain a better understanding of Flask + PostgreSQl.
+The goal of this project is to gain a better understanding of Flask + PostgreSQL.
 
 Flask handles server-side logic, while SQLAlchemy manages database interactions with PostgreSQL. Flask-Login ensures secure user authentication, and Flask-WTF with CSRF protection guards against web attacks. Flask-Migrate handles database changes, and the app integrates with WeatherAPI for real-time weather data.
 
